@@ -9,3 +9,80 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Users {
+  id          Int           @id @default(autoincrement())
+  email       String
+  password    String
+  sessions    Sessions[]
+  credentials Credentials[]
+  secureNotes SecureNotes[]
+  cards       Cards[]
+  wifi        Wifi[]
+
+  @@map("users")
+}
+
+model Sessions {
+  id     Int    @id @default(autoincrement())
+  user   Users  @relation(fields: [userId], references: [id])
+  userId Int
+  token  String @unique
+
+  @@map("sessions")
+}
+
+model Credentials {
+  id       Int    @id @default(autoincrement())
+  user     Users  @relation(fields: [userId], references: [id])
+  userId   Int
+  url      String
+  username String
+  password String
+  title    String
+
+  @@map("credentials")
+}
+
+model SecureNotes {
+  id     Int    @id @default(autoincrement())
+  user   Users  @relation(fields: [userId], references: [id])
+  userId Int
+  title  String
+  note   String
+
+  @@map("secureNotes")
+}
+
+model Cards {
+  id             Int      @id @default(autoincrement())
+  user           Users    @relation(fields: [userId], references: [id])
+  userId         Int
+  number         String
+  name           String
+  cvv            String
+  expirationDate String
+  password       String
+  isVirtual      Boolean  @default(false)
+  type           CardType
+  title          String
+
+  @@map("cards")
+}
+
+enum CardType {
+  credit
+  debit
+  both
+}
+
+model Wifi {
+  id       Int    @id @default(autoincrement())
+  user     Users  @relation(fields: [userId], references: [id])
+  userId   Int
+  name     String
+  password String
+  title    String
+
+  @@map("wifi")
+}
