@@ -17,3 +17,10 @@ export async function create(req: Request, res: Response){
 
     res.sendStatus(201);
 }
+
+export async function get(req: Request, res: Response){
+    const {userId} = res.locals.tokenData;
+    const credentials = await credentialServices.get(userId);
+
+    res.send(credentials);
+}

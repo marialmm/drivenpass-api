@@ -6,8 +6,8 @@ export type CreateCredentialData = Omit<Credentials, "id">;
 
 export async function create(credentialData: CreateCredentialData) {
     await prisma.credentials.create({
-        data: credentialData
-    })
+        data: credentialData,
+    });
 }
 
 export async function getByTitle(title: string) {
@@ -16,4 +16,11 @@ export async function getByTitle(title: string) {
     });
 
     return credential;
+}
+
+export async function get(userId: number) {
+    const credentials = await prisma.credentials.findMany({
+        where: {userId}
+    });
+    return credentials;
 }

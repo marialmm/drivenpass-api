@@ -13,3 +13,4 @@ credentialRouter.post(
     validateJoi(credentialSchema),
     credentialControllers.create
 );
+credentialRouter.get("/credentials", credentialControllers.get)

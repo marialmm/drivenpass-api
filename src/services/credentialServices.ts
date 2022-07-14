@@ -1,3 +1,4 @@
+import { Credentials } from "@prisma/client";
 import * as credentialRepository from "../repositories/credentialRepository.js";
 import * as dataUtils from "../utils/dataUtils.js";
 
@@ -23,4 +24,17 @@ async function checkTitleExists(title: string) {
             message: "Title already exists",
         };
     }
+}
+
+export async function get(userId: number) {
+    const credentials = await credentialRepository.get(userId);
+
+    credentials.forEach((credential) => {
+        credential.password = dataUtils.decrypt(credential.password);
+
+        delete credential.id;
+        delete credential.userId;
+    });
+
+    return credentials;
 }
