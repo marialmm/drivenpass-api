@@ -41,6 +41,7 @@ model Credentials {
   password String
   title    String
 
+  @@unique([userId, title])
   @@map("credentials")
 }
 
@@ -51,6 +52,7 @@ model SecureNotes {
   title  String
   note   String
 
+  @@unique([userId, title])
   @@map("secureNotes")
 }
 
@@ -67,6 +69,7 @@ model Cards {
   type           CardType
   title          String
 
+  @@unique([userId, title])
   @@map("cards")
 }
 
@@ -84,5 +87,6 @@ model Wifi {
   password String
   title    String
 
+  @@unique([userId, title])
   @@map("wifi")
 }

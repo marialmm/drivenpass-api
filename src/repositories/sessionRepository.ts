@@ -8,3 +8,10 @@ export async function create(sessionData: CreateSessionData){
         data: sessionData
     })
 }
+
+export async function get(token: string){
+    const session = prisma.sessions.findFirst({
+        where: {token}
+    });
+    return session;
+}
