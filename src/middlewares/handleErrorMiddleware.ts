@@ -16,5 +16,6 @@ export function handleError(
 
 function errorTypeToStatusCode(type: string) {
     if (type === "unauthorized") return 401;
+    if (type === "notFound") return 404;
     if (type === "conflict") return 409;
 }

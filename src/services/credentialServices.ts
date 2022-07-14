@@ -35,6 +35,13 @@ export async function get(userId: number) {
 export async function getById(userId: number, id: number) {
     const credential = await credentialRepository.getById(id);
 
+    if(!credential){
+        throw{
+            type: "notFound",
+            message: "Credential does not exist"
+        }
+    }
+
     checkIfCredentialBelongsToUser(credential, userId);
 
     credential.password = dataUtils.decrypt(credential.password);
@@ -54,4 +61,19 @@ function checkIfCredentialBelongsToUser(
             message: "Credential does not belong to user",
         };
     }
+}
+
+export async function deleteById(userId: number, id: number) {
+    const credential = await credentialRepository.getById(id);
+
+    if(!credential){
+        throw{
+            type: "notFound",
+            message: "Credential does not exist"
+        }
+    }
+
+    checkIfCredentialBelongsToUser(credential, userId);
+
+    await credentialRepository.deleteById(id);
 }

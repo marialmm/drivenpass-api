@@ -17,3 +17,5 @@ credentialRouter.post(
 credentialRouter.get("/credentials", credentialControllers.get);
 
 credentialRouter.get("/credential/:id", credentialControllers.getById);
+
+credentialRouter.delete("/credential/:id", credentialControllers.deleteById);
