@@ -29,12 +29,29 @@ async function checkTitleExists(title: string) {
 export async function get(userId: number) {
     const credentials = await credentialRepository.get(userId);
 
-    credentials.forEach((credential) => {
-        credential.password = dataUtils.decrypt(credential.password);
-
-        delete credential.id;
-        delete credential.userId;
-    });
-
     return credentials;
+}
+
+export async function getById(userId: number, id: number) {
+    const credential = await credentialRepository.getById(id);
+
+    checkIfCredentialBelongsToUser(credential, userId);
+
+    credential.password = dataUtils.decrypt(credential.password);
+
+    delete credential.userId;
+
+    return credential;
+}
+
+function checkIfCredentialBelongsToUser(
+    credential: Credentials,
+    userId: number
+) {
+    if (credential.userId !== userId) {
+        throw {
+            type: "unauthorized",
+            message: "Credential does not belong to user",
+        };
+    }
 }

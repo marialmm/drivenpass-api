@@ -20,7 +20,24 @@ export async function getByTitle(title: string) {
 
 export async function get(userId: number) {
     const credentials = await prisma.credentials.findMany({
-        where: {userId}
+        where: { userId },
+        select: { id: true, title: true },
     });
     return credentials;
+}
+
+export async function getById(id: number) {
+    const credential = await prisma.credentials.findFirst({
+        where: { id },
+        select: {
+            id: true,
+            password: true,
+            title: true,
+            url: true,
+            username: true,
+            userId: true
+        },
+    });
+
+    return credential;
 }
