@@ -1,18 +1,32 @@
-import * as userRepository from "../repositories/userRepositories";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
 
-export async function signup(userData: userRepository.UserData){
-    await checkEmailIsAlreadyRegistered(userData.email);
+import * as userRepository from "../repositories/userRepository.js";
 
-    await userRepository.create(userData);
+dotenv.config();
+
+export async function signup(userData: userRepository.UserData) {
+    const { email, password } = userData;
+
+    await checkEmailIsAlreadyRegistered(email);
+
+    const encryptedPassword = encryptPassword(password);
+
+    await userRepository.create({ email, password: encryptedPassword });
 }
 
-async function checkEmailIsAlreadyRegistered(email: string){
+async function checkEmailIsAlreadyRegistered(email: string) {
     const user = await userRepository.getByEmail(email);
 
-    if(user){
-        throw{
+    if (user) {
+        throw {
             type: "conflict",
-            message: "Email is already registered"
-        }
+            message: "Email is already registered",
+        };
     }
+}
+
+function encryptPassword(password: string) {
+    const encryptedPassword = bcrypt.hashSync(password, +process.env.SALT);
+    return encryptedPassword;
 }
