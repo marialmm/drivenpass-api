@@ -7,10 +7,14 @@ export function handleError(
     next: NextFunction
 ) {
     console.log(error);
-
-    res.status(errorTypeToStatusCode(error.type)).send(error.message);
+    if (error.type) {
+        res.status(errorTypeToStatusCode(error.type)).send(error.message);
+    } else {
+        res.sendStatus(500);
+    }
 }
 
 function errorTypeToStatusCode(type: string) {
+    if (type === "unauthorized") return 401;
     if (type === "conflict") return 409;
 }
