@@ -1,7 +1,8 @@
-import { NextFunction, Request, Response } from "express";
+import {Request, Response, NextFunction} from "express";
+import Joi from "joi";
 
-export function validateJoi(schema) {
-    return (req: Request, res: Response, next: NextFunction, schema) => {
+export function validateJoi(schema: Joi.ObjectSchema) {
+    return (req: Request, res: Response, next: NextFunction) => {
         const validation = schema.validate(req.body, { abortEarly: false });
 
         if (validation.error) {
@@ -9,5 +10,7 @@ export function validateJoi(schema) {
                 .status(422)
                 .send(validation.error.details.map((detail) => detail.message));
         }
+
+        next();
     };
 }
