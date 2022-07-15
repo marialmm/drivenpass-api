@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { Sessions } from "@prisma/client";
 
 import * as sessionRepository from "../repositories/sessionRepository.js";
+import * as userRepository from "../repositories/userRepository.js";
 
 dotenv.config();
 
@@ -25,11 +26,25 @@ export async function validateToken(
             throwUnauthorizedError();
         }
 
+        await checkUserExists(tokenData);
+
         res.locals.tokenData = tokenData;
         next();
     } catch {
         console.log("deu ruim!");
         throwUnauthorizedError();
+    }
+}
+
+async function checkUserExists(tokenData){
+    const {userId} = tokenData;
+    const user = await userRepository.getById(userId);
+
+    if(!user){
+        throw{
+            type: "notFound",
+            message: "User not found"
+        }
     }
 }
 

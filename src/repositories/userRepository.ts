@@ -16,3 +16,11 @@ export async function getByEmail(email: string) {
 
     return user;
 }
+
+export async function getById(id: number){
+    const user = await prisma.users.findUnique({
+        where: {id}
+    });
+
+    return user;
+}

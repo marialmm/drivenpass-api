@@ -7,7 +7,7 @@ export async function create(
 ) {
     const { title, password } = credentialData;
 
-    await checkTitleExists(title);
+    await checkCredentialTitleExists(title);
 
     const encryptedPassword = dataUtils.encrypt(password);
     credentialData.password = encryptedPassword;
@@ -15,7 +15,7 @@ export async function create(
     await credentialRepository.create(credentialData);
 }
 
-async function checkTitleExists(title: string) {
+async function checkCredentialTitleExists(title: string) {
     const credential = await credentialRepository.getByTitle(title);
 
     if (credential) {
