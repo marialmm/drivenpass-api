@@ -8,3 +8,5 @@ export const noteRouter = Router();
 
 noteRouter.post("/securenote", validateJoi(noteSchema), noteControllers.create);
 noteRouter.get("/securenotes", noteControllers.get);
+noteRouter.get("/securenote/:id", noteControllers.getById);
+noteRouter.delete("/securenote/:id", noteControllers.deleteById);

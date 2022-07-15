@@ -22,3 +22,21 @@ export async function get(req: Request, res: Response) {
 
     res.send(notes);
 }
+
+export async function getById(req: Request, res: Response) {
+    const userId: number = res.locals.tokenData.userId;
+    const id: number = parseInt(req.params.id);
+
+    const note = await noteServices.getById(userId, id);
+
+    res.send(note);
+}
+
+export async function deleteById(req: Request, res: Response) {
+    const userId: number = res.locals.tokenData.userId;
+    const id: number = parseInt(req.params.id);
+
+    await noteServices.deleteById(userId, id);
+
+    res.sendStatus(200);
+}

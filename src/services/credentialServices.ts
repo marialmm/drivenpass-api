@@ -42,7 +42,7 @@ export async function getById(userId: number, id: number) {
         }
     }
 
-    checkIfCredentialBelongsToUser(credential, userId);
+    dataUtils.checkIfDataBelongsToUser(credential.userId, userId, "Credential");
 
     credential.password = dataUtils.decrypt(credential.password);
 
@@ -51,17 +51,6 @@ export async function getById(userId: number, id: number) {
     return credential;
 }
 
-function checkIfCredentialBelongsToUser(
-    credential: Credentials,
-    userId: number
-) {
-    if (credential.userId !== userId) {
-        throw {
-            type: "unauthorized",
-            message: "Credential does not belong to user",
-        };
-    }
-}
 
 export async function deleteById(userId: number, id: number) {
     const credential = await credentialRepository.getById(id);
@@ -73,7 +62,7 @@ export async function deleteById(userId: number, id: number) {
         }
     }
 
-    checkIfCredentialBelongsToUser(credential, userId);
+    dataUtils.checkIfDataBelongsToUser(credential.userId, userId, "Credential");
 
     await credentialRepository.deleteById(id);
 }

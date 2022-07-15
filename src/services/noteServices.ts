@@ -1,4 +1,5 @@
 import * as noteRepository from "../repositories/noteRepository.js";
+import * as dataUtils from "../utils/dataUtils.js";
 
 export async function create(
     secureNoteData: noteRepository.CreateSecureNoteData
@@ -25,4 +26,29 @@ export async function get(userId: number){
     const notes = await noteRepository.get(userId);
 
     return notes
+}
+
+export async function getById(userId: number, id: number){
+    const note = await noteRepository.getById(id);
+
+    if(!note) {
+        throw{
+            type: "notFound",
+            message: "Secure note not found"
+        }
+    }
+
+    dataUtils.checkIfDataBelongsToUser(note.userId, userId, "Secure note");
+
+    delete note.userId;
+
+    return note;
+}
+
+export async function deleteById(userId: number, id: number){
+    const note = await noteRepository.getById(id);
+
+    dataUtils.checkIfDataBelongsToUser(note.userId, userId, "Secure note");
+
+    await noteRepository.deleteById(id);
 }

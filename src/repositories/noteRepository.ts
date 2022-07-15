@@ -18,14 +18,34 @@ export async function getByTitle(title: string) {
     return secureNote;
 }
 
-export async function get(userId: number){
+export async function get(userId: number) {
     const notes = await prisma.secureNotes.findMany({
-        where: {userId},
+        where: { userId },
         select: {
             id: true,
-            title: true
-        }
+            title: true,
+        },
     });
 
     return notes;
+}
+
+export async function getById(id: number) {
+    const note = await prisma.secureNotes.findFirst({
+        where: { id },
+        // select: {
+        //     id: true,
+        //     title: true,
+        //     note: true,
+        //     userId: true
+        // }
+    });
+
+    return note;
+}
+
+export async function deleteById(id: number) {
+    await prisma.secureNotes.delete({
+        where: {id}
+    });
 }

@@ -18,3 +18,16 @@ export function decrypt(data: string){
     const decryptedData = cryptr.decrypt(data);
     return decryptedData;
 }
+
+export function checkIfDataBelongsToUser(
+    dataUserId: number,
+    userId: number,
+    dataType: string
+) {
+    if (dataUserId !== userId) {
+        throw {
+            type: "unauthorized",
+            message: `${dataType} does not belong to user`,
+        };
+    }
+}
