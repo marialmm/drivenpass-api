@@ -7,3 +7,4 @@ import * as noteControllers from "../controllers/noteControllers.js"
 export const noteRouter = Router();
 
 noteRouter.post("/securenote", validateJoi(noteSchema), noteControllers.create);
+noteRouter.get("/securenotes", noteControllers.get);

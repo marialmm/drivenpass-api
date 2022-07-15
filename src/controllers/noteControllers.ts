@@ -14,3 +14,11 @@ export async function create(req: Request, res: Response) {
 
     res.sendStatus(201);
 }
+
+export async function get(req: Request, res: Response) {
+    const userId: number = res.locals.tokenData.userId;
+
+    const notes = await noteServices.get(userId);
+
+    res.send(notes);
+}

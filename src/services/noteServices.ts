@@ -20,3 +20,9 @@ async function checkNoteTitleExists(title: string) {
         };
     }
 }
+
+export async function get(userId: number){
+    const notes = await noteRepository.get(userId);
+
+    return notes
+}

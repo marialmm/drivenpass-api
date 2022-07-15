@@ -17,3 +17,15 @@ export async function getByTitle(title: string) {
 
     return secureNote;
 }
+
+export async function get(userId: number){
+    const notes = await prisma.secureNotes.findMany({
+        where: {userId},
+        select: {
+            id: true,
+            title: true
+        }
+    });
+
+    return notes;
+}
