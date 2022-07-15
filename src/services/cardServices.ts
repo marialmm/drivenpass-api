@@ -22,3 +22,9 @@ async function checkCardTitleExists(title: string) {
         }
     }
 }
+
+export async function get(userId: number){
+    const cards = await cardRepository.get(userId);
+
+    return cards
+}

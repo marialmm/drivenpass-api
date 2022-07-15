@@ -7,3 +7,4 @@ import * as cardControllers from "../controllers/cardControllers.js";
 export const cardRouter = Router();
 
 cardRouter.post("/card", validateJoi(cardSchema), cardControllers.create);
+cardRouter.get("/cards", cardControllers.get);

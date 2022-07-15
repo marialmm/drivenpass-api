@@ -16,3 +16,15 @@ export async function getByTitle(title: string) {
 
     return card
 }
+
+export async function get(userId: number){
+    const cards = prisma.cards.findMany({
+        where: {userId},
+        select: {
+            id: true,
+            title: true
+        }
+    });
+
+    return cards
+}
