@@ -28,3 +28,23 @@ export async function get(userId: number){
 
     return cards
 }
+
+export async function getById(userId: number, id: number){
+    const card = await cardRepository.getById(id);
+
+    if(!card){
+        throw {
+            type: "notFound",
+            message: "Card not found"
+        }
+    }
+
+    dataUtils.checkIfDataBelongsToUser(card.userId, userId, "Card");
+
+    card.password = dataUtils.decrypt(card.password);
+    card.cvv = dataUtils.decrypt(card.cvv);
+
+    delete card.userId;
+
+    return card;
+}

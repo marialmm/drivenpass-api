@@ -8,3 +8,4 @@ export const cardRouter = Router();
 
 cardRouter.post("/card", validateJoi(cardSchema), cardControllers.create);
 cardRouter.get("/cards", cardControllers.get);
+cardRouter.get("/card/:id", cardControllers.getById);

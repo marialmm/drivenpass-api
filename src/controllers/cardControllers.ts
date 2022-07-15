@@ -21,3 +21,12 @@ export async function get(req: Request, res: Response) {
 
     res.send(cards);
 }
+
+export async function getById(req: Request, res: Response) {
+    const userId: number = res.locals.tokenData.userId;
+    const id: number = parseInt(req.params.id);
+
+    const card = await cardServices.getById(userId, id);
+
+    res.send(card);
+}

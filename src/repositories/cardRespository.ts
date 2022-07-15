@@ -28,3 +28,11 @@ export async function get(userId: number){
 
     return cards
 }
+
+export async function getById(id: number){
+    const card = prisma.cards.findFirst({
+        where: {id}
+    })
+
+    return card
+}
