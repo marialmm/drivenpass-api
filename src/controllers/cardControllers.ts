@@ -30,3 +30,13 @@ export async function getById(req: Request, res: Response) {
 
     res.send(card);
 }
+
+export async function deleteById(req: Request, res: Response) {
+    const userId: number = res.locals.tokenData.userId;
+    const id: number = parseInt(req.params.id);
+    console.log(id);
+
+    await cardServices.deleteById(id, userId);
+
+    res.sendStatus(200);
+}

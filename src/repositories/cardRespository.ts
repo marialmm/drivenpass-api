@@ -36,3 +36,9 @@ export async function getById(id: number){
 
     return card
 }
+
+export async function deleteById(id: number){
+    await prisma.cards.delete({
+        where: {id}
+    })
+}
