@@ -29,3 +29,11 @@ export async function get(userId: number) {
 
     return wifi;
 }
+
+export async function getById(id: number) {
+    const wifi = await prisma.wifi.findFirst({
+        where: {id}
+    });
+
+    return wifi;
+}

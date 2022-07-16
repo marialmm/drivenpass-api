@@ -21,3 +21,12 @@ export async function get(req: Request, res: Response) {
 
     res.send(wifi);
 }
+
+export async function getById(req: Request, res: Response) {
+    const userId: number = res.locals.tokenData.userId;
+    const id: number = parseInt(req.params.id);
+
+    const wifi = await wifiServices.getById(userId, id);
+
+    res.send(wifi);
+}

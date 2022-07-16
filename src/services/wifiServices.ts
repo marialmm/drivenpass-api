@@ -27,3 +27,19 @@ export async function get(userId: number) {
 
     return wifi;
 }
+
+export async function getById(userId: number, id: number) {
+    const wifi = await wifiRepository.getById(id);
+
+    if (!wifi) {
+        throw {
+            type: "notFound",
+            message: "Wifi not found",
+        };
+    }
+
+    dataUtils.checkIfDataBelongsToUser(wifi.userId, userId, "Wifi");
+    wifi.password = dataUtils.decrypt(wifi.password);
+
+    return wifi;
+}
