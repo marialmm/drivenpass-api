@@ -30,3 +30,12 @@ export async function getById(req: Request, res: Response) {
 
     res.send(wifi);
 }
+
+export async function deleteById(req: Request, res: Response) {
+    const userId: number = res.locals.tokenData.userId;
+    const id: number = parseInt(req.params.id);
+
+    await wifiServices.deleteById(userId, id);
+
+    res.sendStatus(200);
+}

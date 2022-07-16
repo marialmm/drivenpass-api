@@ -22,20 +22,20 @@ async function checkNoteTitleExists(title: string) {
     }
 }
 
-export async function get(userId: number){
+export async function get(userId: number) {
     const notes = await noteRepository.get(userId);
 
-    return notes
+    return notes;
 }
 
-export async function getById(userId: number, id: number){
+export async function getById(userId: number, id: number) {
     const note = await noteRepository.getById(id);
 
-    if(!note) {
-        throw{
+    if (!note) {
+        throw {
             type: "notFound",
-            message: "Secure note not found"
-        }
+            message: "Secure note not found",
+        };
     }
 
     dataUtils.checkIfDataBelongsToUser(note.userId, userId, "Secure note");
@@ -45,8 +45,15 @@ export async function getById(userId: number, id: number){
     return note;
 }
 
-export async function deleteById(userId: number, id: number){
+export async function deleteById(userId: number, id: number) {
     const note = await noteRepository.getById(id);
+
+    if (!note) {
+        throw {
+            type: "notFound",
+            message: "Note not found",
+        };
+    }
 
     dataUtils.checkIfDataBelongsToUser(note.userId, userId, "Secure note");
 

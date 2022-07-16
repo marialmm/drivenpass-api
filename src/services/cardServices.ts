@@ -51,7 +51,6 @@ export async function getById(userId: number, id: number){
 
 export async function deleteById(id: number, userId: number){
     const card = await cardRepository.getById(id);
-    console.log(id);
 
     if(!card){
         throw {

@@ -9,3 +9,4 @@ export const wifiRouter = Router();
 wifiRouter.post("/wifi", validateJoi(wifiSchema), wifiControllers.create);
 wifiRouter.get("/wifi", wifiControllers.get);
 wifiRouter.get("/wifi/:id", wifiControllers.getById);
+wifiRouter.delete("/wifi/:id", wifiControllers.deleteById);

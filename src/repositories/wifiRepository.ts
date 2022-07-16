@@ -10,14 +10,6 @@ export async function create(wifiData: CreateWifiData) {
     });
 }
 
-export async function getByTitle(title: string) {
-    const wifi = await prisma.wifi.findFirst({
-        where: { title },
-    });
-
-    return wifi;
-}
-
 export async function get(userId: number) {
     const wifi = await prisma.wifi.findMany({
         where: { userId },
@@ -32,8 +24,14 @@ export async function get(userId: number) {
 
 export async function getById(id: number) {
     const wifi = await prisma.wifi.findFirst({
-        where: {id}
+        where: { id },
     });
 
     return wifi;
+}
+
+export async function deleteById(id: number) {
+    await prisma.wifi.delete({
+        where: { id },
+    });
 }
