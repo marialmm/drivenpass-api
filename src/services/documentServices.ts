@@ -1,4 +1,5 @@
 import * as documentRepository from "../repositories/documentRepository.js";
+import * as dataUtils from "../utils/dataUtils.js";
 
 export async function create(
     documentData: documentRepository.CreateDocumentData
@@ -25,4 +26,21 @@ export async function get(userId: number) {
     const documents = await documentRepository.get(userId);
 
     return documents;
+}
+
+export async function getById(userId: number, id: number) {
+    const document = await documentRepository.getById(id);
+
+    if (!document) {
+        throw {
+            type: "notFound",
+            message: "Document not found",
+        };
+    }
+
+    dataUtils.checkIfDataBelongsToUser(document.userId, userId, "Document");
+
+    delete document.userId;
+
+    return document;
 }

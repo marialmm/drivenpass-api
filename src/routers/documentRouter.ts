@@ -12,3 +12,4 @@ documentRouter.post(
     documentControllers.create
 );
 documentRouter.get("/documents", documentControllers.get);
+documentRouter.get("/document/:id", documentControllers.getById);

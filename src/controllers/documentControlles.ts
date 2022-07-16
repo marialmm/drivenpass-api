@@ -21,3 +21,12 @@ export async function get(req: Request, res: Response) {
 
     res.send(documents);
 }
+
+export async function getById(req: Request, res: Response) {
+    const userId: number = parseInt(res.locals.tokenData.userId);
+    const id:  number = parseInt(req.params.id);
+
+    const document = await documentServices.getById(userId, id);
+
+    res.send(document)
+}

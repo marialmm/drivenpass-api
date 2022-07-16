@@ -20,7 +20,19 @@ export async function getByTitle(title: string) {
 export async function get(userId: number) {
     const documents = await prisma.documents.findMany({
         where: { userId },
+        select: {
+            id: true,
+            title: true,
+        },
     });
 
     return documents;
+}
+
+export async function getById(id: number) {
+    const document = await prisma.documents.findFirst({
+        where: { id },
+    });
+
+    return document;
 }
