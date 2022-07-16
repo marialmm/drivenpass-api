@@ -16,7 +16,7 @@ export async function validateToken(
     const authorization: string = req.headers.authorization;
 
     const token = authorization?.replace("Bearer ", "").trim();
-    
+
     try {
         const secret = process.env.JWT_SECRET_KEY;
         const tokenData = jwt.verify(token, secret);
@@ -31,20 +31,19 @@ export async function validateToken(
         res.locals.tokenData = tokenData;
         next();
     } catch {
-        console.log("deu ruim!");
         throwUnauthorizedError();
     }
 }
 
-async function checkUserExists(tokenData){
-    const {userId} = tokenData;
+async function checkUserExists(tokenData) {
+    const { userId } = tokenData;
     const user = await userRepository.getById(userId);
 
-    if(!user){
-        throw{
+    if (!user) {
+        throw {
             type: "notFound",
-            message: "User not found"
-        }
+            message: "User not found",
+        };
     }
 }
 
