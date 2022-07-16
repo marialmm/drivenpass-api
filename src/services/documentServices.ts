@@ -44,3 +44,18 @@ export async function getById(userId: number, id: number) {
 
     return document;
 }
+
+export async function deleteById(userId: number, id: number) {
+    const document = await documentRepository.getById(id);
+
+    if (!document) {
+        throw {
+            type: "notFound",
+            message: "Document not found",
+        };
+    }
+
+    dataUtils.checkIfDataBelongsToUser(document.userId, userId, "Document");
+
+    await documentRepository.deleteById(id);
+}

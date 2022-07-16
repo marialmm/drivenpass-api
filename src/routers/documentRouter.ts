@@ -13,3 +13,4 @@ documentRouter.post(
 );
 documentRouter.get("/documents", documentControllers.get);
 documentRouter.get("/document/:id", documentControllers.getById);
+documentRouter.delete("/document/:id", documentControllers.deleteById);

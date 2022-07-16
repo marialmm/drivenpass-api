@@ -23,10 +23,19 @@ export async function get(req: Request, res: Response) {
 }
 
 export async function getById(req: Request, res: Response) {
-    const userId: number = parseInt(res.locals.tokenData.userId);
+    const userId: number = res.locals.tokenData.userId;
     const id:  number = parseInt(req.params.id);
 
     const document = await documentServices.getById(userId, id);
 
     res.send(document)
+}
+
+export async function deleteById(req: Request, res: Response) {
+    const userId: number = res.locals.tokenData.userId;
+    const id: number = parseInt(req.params.id);
+
+    await documentServices.deleteById(userId, id);
+
+    res.sendStatus(200);
 }

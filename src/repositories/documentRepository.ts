@@ -36,3 +36,9 @@ export async function getById(id: number) {
 
     return document;
 }
+
+export async function deleteById(id: number) {
+    await prisma.documents.delete({
+        where: { id },
+    });
+}
