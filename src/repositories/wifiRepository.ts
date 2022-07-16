@@ -17,3 +17,15 @@ export async function getByTitle(title: string) {
 
     return wifi;
 }
+
+export async function get(userId: number) {
+    const wifi = await prisma.wifi.findMany({
+        where: { userId },
+        select: {
+            id: true,
+            title: true,
+        },
+    });
+
+    return wifi;
+}

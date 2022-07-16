@@ -21,3 +21,9 @@ async function checkWifiTitleExists(title: string) {
         };
     }
 }
+
+export async function get(userId: number) {
+    const wifi = await wifiRepository.get(userId);
+
+    return wifi;
+}

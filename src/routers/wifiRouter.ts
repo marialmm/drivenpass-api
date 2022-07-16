@@ -6,4 +6,5 @@ import * as wifiControllers from "../controllers/wifiControllers.js";
 
 export const wifiRouter = Router();
 
-wifiRouter.post("/+wifi", validateJoi(wifiSchema), wifiControllers.create);
+wifiRouter.post("/wifi", validateJoi(wifiSchema), wifiControllers.create);
+wifiRouter.get("/wifi", wifiControllers.get);
