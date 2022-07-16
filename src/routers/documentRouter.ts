@@ -11,3 +11,4 @@ documentRouter.post(
     validateJoi(documentSchema),
     documentControllers.create
 );
+documentRouter.get("/documents", documentControllers.get);

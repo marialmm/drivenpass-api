@@ -13,3 +13,11 @@ export async function create(req: Request, res: Response) {
 
     res.sendStatus(201);
 }
+
+export async function get(req: Request, res: Response) {
+    const userId: number = parseInt(res.locals.tokenData.userId);
+
+    const documents = await documentServices.get(userId);
+
+    res.send(documents);
+}

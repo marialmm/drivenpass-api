@@ -20,3 +20,9 @@ async function checkDocumentTitleExists(title: string) {
         };
     }
 }
+
+export async function get(userId: number) {
+    const documents = await documentRepository.get(userId);
+
+    return documents;
+}

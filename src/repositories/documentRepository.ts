@@ -14,5 +14,13 @@ export async function getByTitle(title: string) {
         where: { title },
     });
 
-    return document
+    return document;
+}
+
+export async function get(userId: number) {
+    const documents = await prisma.documents.findMany({
+        where: { userId },
+    });
+
+    return documents;
 }
