@@ -67,3 +67,9 @@ function generateToken(userId: number) {
     const token = jwt.sign(data, secretKey, config);
     return token;
 }
+
+export async function getUserInfo(id: number){
+    const {_count} = await userRepository.getInfo(id);
+
+    return {... _count}
+}

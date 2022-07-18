@@ -5,7 +5,7 @@ export type UserData = Omit<Users, "id">;
 
 export async function create(userData: UserData) {
     await prisma.users.create({
-        data: userData
+        data: userData,
     });
 }
 
@@ -17,10 +17,29 @@ export async function getByEmail(email: string) {
     return user;
 }
 
-export async function getById(id: number){
+export async function getById(id: number) {
     const user = await prisma.users.findUnique({
-        where: {id}
+        where: { id },
     });
 
     return user;
+}
+
+export async function getInfo(id: number) {
+    const userInfo = await prisma.users.findFirst({
+        where: { id },
+        include: {
+            _count: {
+                select: {
+                    cards: true,
+                    credentials: true,
+                    documents: true,
+                    secureNotes: true,
+                    wifi: true,
+                },
+            },
+        },
+    });
+
+    return userInfo;
 }

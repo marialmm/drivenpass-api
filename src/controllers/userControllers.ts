@@ -17,3 +17,11 @@ export async function signin(req: Request, res: Response) {
 
     res.send(token);
 }
+
+export async function getUserInfo(req: Request, res: Response) {
+    const id: number = res.locals.tokenData.userId;
+
+    const userInfo = await userServices.getUserInfo(id);
+
+    res.send(userInfo);
+}
