@@ -2,9 +2,9 @@ import * as cardRepository from "../repositories/cardRespository.js";
 import * as dataUtils from "../utils/dataUtils.js"
 
 export async function create(cardData: cardRepository.CreateCardData){
-    const {title, password, cvv} = cardData;
+    const {title, password, cvv, userId} = cardData;
 
-    await checkCardTitleExists(title);
+    await checkCardTitleExists(title, userId);
 
     cardData.password = dataUtils.encrypt(password);
     cardData.cvv = dataUtils.encrypt(cvv);
@@ -12,10 +12,10 @@ export async function create(cardData: cardRepository.CreateCardData){
     await cardRepository.create(cardData);
 }
 
-async function checkCardTitleExists(title: string) {
+async function checkCardTitleExists(title: string, userId: number) {
     const card = await cardRepository.getByTitle(title);
 
-    if(card){
+    if(card && card.userId === userId){
         throw {
             type: "conflict",
             message: "Title already exists"

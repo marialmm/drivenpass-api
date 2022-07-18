@@ -4,17 +4,17 @@ import * as dataUtils from "../utils/dataUtils.js";
 export async function create(
     secureNoteData: noteRepository.CreateSecureNoteData
 ) {
-    const { title } = secureNoteData;
+    const { title, userId } = secureNoteData;
 
-    await checkNoteTitleExists(title);
+    await checkNoteTitleExists(title, userId);
 
     await noteRepository.create(secureNoteData);
 }
 
-async function checkNoteTitleExists(title: string) {
-    const credential = await noteRepository.getByTitle(title);
+async function checkNoteTitleExists(title: string, userId: number) {
+    const note = await noteRepository.getByTitle(title);
 
-    if (credential) {
+    if (note && note.userId === userId) {
         throw {
             type: "conflict",
             message: "Title already exists",

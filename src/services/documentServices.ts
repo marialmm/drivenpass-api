@@ -4,17 +4,17 @@ import * as dataUtils from "../utils/dataUtils.js";
 export async function create(
     documentData: documentRepository.CreateDocumentData
 ) {
-    const { title } = documentData;
+    const { title, userId } = documentData;
 
-    await checkDocumentTitleExists(title);
+    await checkDocumentTitleExists(title, userId);
 
     await documentRepository.create(documentData);
 }
 
-async function checkDocumentTitleExists(title: string) {
+async function checkDocumentTitleExists(title: string, userId: number) {
     const document = await documentRepository.getByTitle(title);
 
-    if (document) {
+    if (document && document.userId === userId) {
         throw {
             type: "conflict",
             message: "Title already exists",

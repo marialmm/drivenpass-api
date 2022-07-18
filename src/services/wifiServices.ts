@@ -2,8 +2,6 @@ import * as wifiRepository from "../repositories/wifiRepository.js";
 import * as dataUtils from "../utils/dataUtils.js";
 
 export async function create(wifiData: wifiRepository.CreateWifiData) {
-    const { title } = wifiData;
-
     wifiData.password = dataUtils.encrypt(wifiData.password);
 
     await wifiRepository.create(wifiData);

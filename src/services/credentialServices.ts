@@ -5,9 +5,9 @@ import * as dataUtils from "../utils/dataUtils.js";
 export async function create(
     credentialData: credentialRepository.CreateCredentialData
 ) {
-    const { title, password } = credentialData;
+    const { title, password, userId } = credentialData;
 
-    await checkCredentialTitleExists(title);
+    await checkCredentialTitleExists(title, userId);
 
     const encryptedPassword = dataUtils.encrypt(password);
     credentialData.password = encryptedPassword;
@@ -15,10 +15,10 @@ export async function create(
     await credentialRepository.create(credentialData);
 }
 
-async function checkCredentialTitleExists(title: string) {
+async function checkCredentialTitleExists(title: string, userId: number) {
     const credential = await credentialRepository.getByTitle(title);
 
-    if (credential) {
+    if (credential && credential.userId === userId) {
         throw {
             type: "conflict",
             message: "Title already exists",
